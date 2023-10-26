@@ -4,11 +4,12 @@
     <div class="searchContent">
       <h2>搜索结果</h2>
       <ul>
-        <li>
-          <span class="hotTitleTage">完结</span>
-          <span class="hotTitleTageUpdate">更新中...</span>
-          <span class="hotTitleContent">老谢java资方可</span>
-          <span class="hotDate">发布时间：xxxxx</span>
+        <li v-for="(item,index) in resultList"
+          :key="item.index">
+          <span class="hotTitleTage" v-show="item.finish === 0">完结</span>
+          <span class="hotTitleTageUpdate" v-show="item.finish === 1">更新中...</span>
+          <span class="hotTitleContent">{{ item.courseLabe }}</span>
+          <span class="hotDate">发布时间：{{ $dayjs((item.date)).format('YYYY-MM-DD') }}</span>
         </li>
       </ul>
     </div>
@@ -20,6 +21,7 @@ export default {
   layout: "layouts",
   data () {
     return {
+      resultList:[]
     };
   },
 
@@ -29,9 +31,25 @@ export default {
 
   mounted(){
     console.log(this.$route.params.name)
+    this.getResultList(this.$route.params.name)
   },
 
-  methods:{}
+  methods:{
+    getResultList(text){
+      this.$axios({
+        methods:"get",
+        url:"/queryLike",
+        params:{
+          keywords:text
+        }
+      }).then((response)=>{
+        console.log("模糊查询")
+        console.log(response);
+        this.resultList = response.data.data;
+
+      })
+    }
+  }
 }
 
 </script>
@@ -71,7 +89,7 @@ export default {
 }
 .hotTitleContent {
   cursor: pointer;
-  transition: all 0.25s;
+  transition: all 0.25ms;
   flex: 1;
 }
 .hotTitleContent:hover {

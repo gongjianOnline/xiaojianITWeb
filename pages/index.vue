@@ -1,7 +1,18 @@
 <template>
   <div class="wrapper"> 
     <div class="mkdir">
-      <ul class="List">
+      <div class="switchContainer">
+        <el-switch
+          style="display: block"
+          v-model="switchValue"
+          active-color="#67C23A"
+          inactive-color="#13ce66"
+          active-text="大专业"
+          @change="handelChange"
+          inactive-text="小分类">
+        </el-switch>
+      </div>
+      <ul class="List" v-show="!switchValue">
         <li :class="0==listIndex?'actived':''" 
           @click="handelClick(0)">热门推荐</li>
         <li :class="item.tagId==listIndex?'actived':''" 
@@ -9,10 +20,17 @@
           v-for="(item) in listData" 
           :key="item.tagId">{{item.tagLabel}}</li>
       </ul>
+      <!-- 大专业菜单 -->
+      <ul class="List" v-show="switchValue">
+        <li :class="item.majorId==majorIndex?'actived':''" 
+          @click="getMajorCourseList(item.majorId)"
+          v-for="(item) in majorList" 
+          :key="item.majorId">{{item.majorLabel}}</li>
+      </ul>
     </div>
     <div class="content">
-      <Hot v-show="listIndex==0" :hotData="hotData"></Hot>
-      <Convention v-show="listIndex!=0" :conventionData="conventionData"></Convention>
+      <Hot v-show="listIndex==0 && switchValue==false" :hotData="hotData"></Hot>
+      <Convention v-show="listIndex!=0 || switchValue" :conventionData="conventionData"></Convention>
     </div>
   </div>
 </template>
@@ -29,6 +47,8 @@ export default {
       listData:[],
       hotData:[],
       conventionData:[],
+      switchValue:false,
+      majorList:[]
     }
   },
   components:{
@@ -85,9 +105,37 @@ export default {
         }
       }).then((response)=>{
         this.conventionData = response.data.data;
-        console.log("111",this.conventionData)
       })
+    },
+    /**获取专业列表 */
+    getMajorList(){
+      this.$axios.get("/getMajorList").then((response)=>{
+        this.majorList = response.data.data;
+        this.majorIndex = response.data.data[0].majorId;
+        this.getMajorCourseList(response.data.data[0].majorId);
+      })
+    },
+    /**获取专业课程列表 */
+    getMajorCourseList(majorId){
+      this.majorIndex = majorId;
+      this.$axios({
+        methods:"get",
+        url:"/getMajorCourseList",
+        params:{majorId:majorId}
+      }).then((response)=>{
+        console.log("1212",response.data.data)
+        this.conventionData = response.data.data;
+      })
+    },
+    /**开关 */
+    handelChange(){
+      if(!this.majorList){
+        this.getHotCourse()
+      }else{
+        this.getMajorList()
+      }
     }
+
 
 
   }
@@ -100,8 +148,13 @@ export default {
   height: calc(100vh - 60px);
   display: flex;
 }
+.switchContainer{
+  display: flex;
+  justify-content: center;
+  margin-top:10px ;
+}
 .mkdir{
-  width: 15%;
+  width: 18%;
   height: 100%;
   border-right: 1px solid #ccc;
   overflow: auto;
@@ -116,7 +169,7 @@ export default {
 .List li{
   padding: 5px 0px;
   cursor: pointer;
-  transition: all 0.25s;
+  transition: all 0.25ms;
 }
 .List li:hover{
   color:green;

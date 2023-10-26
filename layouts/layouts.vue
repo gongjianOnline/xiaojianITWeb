@@ -6,7 +6,7 @@
       <h1>小箭IT资源站</h1>
       <div>
         <div class="navComponent">
-          <NuxtLink to="/">首页</NuxtLink>
+          <NuxtLink to="/" class="navComponentHome">首页</NuxtLink>
           <NuxtLink to="/statement">免责声明</NuxtLink>
         </div>
       </div>
@@ -64,10 +64,23 @@ h1{
 }
 .navComponent{
   margin-left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2px;
+}
+.navComponentHome{
+  margin-right: 10px;
 }
 a{
-  font-size: 18px;
+  font-size: 16px;
   color: #000;
+  text-decoration: none;
+  transition: all 0.25ms;
+}
+a:hover{
+  text-decoration: none;
+  color: green;
 }
 
 .leftContainer{

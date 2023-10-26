@@ -105,7 +105,7 @@ export default {
 }
 .hotTitleContent {
   cursor: pointer;
-  transition: all 0.25s;
+  transition: all 0.25ms;
   flex: 1;
 }
 .hotTitleContent:hover {
