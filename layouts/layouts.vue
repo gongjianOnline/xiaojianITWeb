@@ -11,7 +11,14 @@
         </div>
       </div>
     </div>
-    <div class="searchContainer">搜索框</div>
+    <div class="searchContainer">
+      <el-input
+        placeholder="搜索课程名称"
+        suffix-icon="el-icon-search"
+        @keyup.enter.native="handleEnter"
+        v-model="searchResult">
+      </el-input>
+    </div>
     <div class="infoContainer">添加微信获取资料：xiaojianIT</div>
   </header>
 
@@ -24,6 +31,7 @@
 export default {
   data () {
     return {
+      searchResult:""
     };
   },
 
@@ -33,7 +41,11 @@ export default {
 
   mounted(){},
 
-  methods:{}
+  methods:{
+    handleEnter(){
+      window.open(`/search/${this.searchResult}`,"_self")
+    }
+  }
 }
 
 </script>
