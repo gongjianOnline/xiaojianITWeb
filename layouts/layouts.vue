@@ -61,9 +61,6 @@ a{
 .leftContainer{
   display: flex;
 }
-.searchContainer{
-
-}
 .infoContainer{
   font-size: 18px;
   font-weight: bold;

@@ -5,15 +5,14 @@
     <div class="hotContainer">
       <h2>课程目录</h2>
       <ul>
-        <li v-for="(item, index) in mkdirList" :key="index">
-          <span class="hotTitleTage" v-show="item.isFinish == 0">完结</span>
-          <span class="hotTitleTageUpdate" v-show="item.isFinish == 1"
-            >更新中...</span
+        <li v-for="(item, index) in conventionData" :key="index">
+          <span class="hotTitleTage" v-show="item.finish == 0">完结</span>
+          <span class="hotTitleTageUpdate" v-show="item.finish == 1">更新中...</span
           >
-          <span class="hotTitleContent" @click="handelClick(item)">{{
-            item.title
+          <span class="hotTitleContent" @click="handelClick(item.url)">{{
+            item.courseLabe
           }}</span>
-          <span class="hotDate">发布时间：{{ item.date }}</span>
+          <span class="hotDate">发布时间：{{$dayjs((item.date*1000)).format('YYYY-MM-DD')}}</span>
         </li>
       </ul>
     </div>
@@ -53,6 +52,13 @@ export default {
     };
   },
 
+  props:{
+    conventionData:{
+      type:Array,
+      default:()=>new Array()
+    }
+  },
+
   components: {},
 
   computed: {},
@@ -60,8 +66,8 @@ export default {
   mounted() {},
 
   methods: {
-    handelClick(item) {
-      window.open(item.url);
+    handelClick(url) {
+      window.open(url);
     },
   },
 };

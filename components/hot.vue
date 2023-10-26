@@ -2,17 +2,17 @@
 <template>
   <div class="hotWrapper">
     <!-- 热门推荐 -->
-    <div class="hotContainer"  v-for="(item, index) in hotList" :key="index">
-      <h2>{{ item.title }}</h2>
+    <div class="hotContainer"  v-for="(item, index) in hotData" :key="index">
+      <h2>{{ item.majorLabel }}</h2>
       <ul>
         <li
           v-for="(childItem, childIndex) in item.children"
           :key="childIndex"
         >
-          <span class="hotTitleTage" v-show="childItem.isFinish==0">完结</span>
-          <span class="hotTitleTageUpdate" v-show="childItem.isFinish==1">更新中...</span>
-          <span class="hotTitleContent"  @click="handelClick(childItem)">{{ childItem.title }}</span>
-          <span class="hotDate">发布时间：{{ childItem.date }}</span>
+          <span class="hotTitleTage" v-show="childItem.finish==0">完结</span>
+          <span class="hotTitleTageUpdate" v-show="childItem.finish==1">更新中...</span>
+          <span class="hotTitleContent"  @click="handelClick(childItem)">{{ childItem.courseLabe }}</span>
+          <span class="hotDate">发布时间：{{ $dayjs((childItem.date*1000)).format('YYYY-MM-DD')  }}</span>
         </li>
       </ul>
     </div>
@@ -23,63 +23,14 @@
 export default {
   data() {
     return {
-      hotList: [
-        {
-          title: "web",
-          children: [
-            {
-              title: "宁皓 2023 独立开发者训练营（全栈）",
-              isFinish: 0,
-              url: "https://www.baidu.com",
-              date:'2022-10-10'
-            },
-            {
-              title: "宁皓 2023 独立开发者训练营（全栈）",
-              isFinish: 0,
-              url: "https://www.baidu.com",
-              date:'2022-10-10'
-            },
-            {
-              title: "宁皓 2023 独立开发者训练营（全栈）",
-              isFinish: 0,
-              url: "https://www.baidu.com",
-              date:'2022-10-10'
-            },
-            {
-              title: "宁皓 2023 独立开发者训练营（全栈）",
-              isFinish: 1,
-              url: "https://www.baidu.com",
-              date:'2022-10-10'
-            },
-          ],
-        },
-        {
-          title: "java开发",
-          children: [
-            {
-              title: "宁皓 2023 独立开发者训练营（全栈）",
-              isFinish: 0,
-              url: "https://www.baidu.com",
-            },
-            {
-              title: "宁皓 2023 独立开发者训练营（全栈）",
-              isFinish: 0,
-              url: "https://www.baidu.com",
-            },
-            {
-              title: "宁皓 2023 独立开发者训练营（全栈）",
-              isFinish: 0,
-              url: "https://www.baidu.com",
-            },
-            {
-              title: "宁皓 2023 独立开发者训练营（全栈）",
-              isFinish: 1,
-              url: "https://www.baidu.com",
-            },
-          ],
-        },
-      ],
     };
+  },
+
+  props:{
+    hotData:{
+      type:Array,
+      default:()=>new Array()
+    }
   },
 
   components: {},

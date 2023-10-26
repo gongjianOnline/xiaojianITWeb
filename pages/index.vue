@@ -2,15 +2,17 @@
   <div class="wrapper"> 
     <div class="mkdir">
       <ul class="List">
-        <li :class="index==listIndex?'actived':''" 
-          @click="handelClick(index)"
-          v-for="(item,index) in listData" 
-          :key="index">{{item.label}}</li>
+        <li :class="0==listIndex?'actived':''" 
+          @click="handelClick(0)">热门推荐</li>
+        <li :class="item.tagId==listIndex?'actived':''" 
+          @click="handelClick(item.tagId)"
+          v-for="(item) in listData" 
+          :key="item.tagId">{{item.tagLabel}}</li>
       </ul>
     </div>
     <div class="content">
-      <Hot v-if="listIndex==0"></Hot>
-      <Convention v-else></Convention>
+      <Hot v-show="listIndex==0" :hotData="hotData"></Hot>
+      <Convention v-show="listIndex!=0" :conventionData="conventionData"></Convention>
     </div>
   </div>
 </template>
@@ -24,34 +26,70 @@ export default {
   data(){
     return {
       listIndex:0,
-      listData:[
-        {
-          value:0,
-          label:"热门推荐"
-        },
-        {
-          value:1,
-          label:"更新记录2023"
-        },
-        {
-          value:2,
-          label:"更新记录2022"
-        },
-        {
-          value:3,
-          label:"Java开发"
-        },
-
-      ]
+      listData:[],
+      hotData:[],
+      conventionData:[],
     }
   },
   components:{
 
-  },  
+  },
+  mounted(){
+    this.getTagList();
+  },
   methods:{
     handelClick(index){
       this.listIndex = index;
+      if(index === 0){
+        this.getHotCourse()
+      }else{
+        this.getCourseList()
+      }
+    },
+    /**获取菜单列表 */
+    getTagList(){
+      this.$axios.get("/getTagList").then(response=>{
+        this.listData = response.data.data;
+        this.handelClick(0);
+      })
+    },
+    /**获取首页课程列表 */
+    getHotCourse(){
+      this.$axios({
+        url:"/getHotCourseList",
+        params:{
+          tagId:this.listIndex
+        }
+      }).then(response=>{
+        let res = response.data.data;
+        const result = {};
+        res.forEach(item => {
+          const majorLabel = item.majorLabel;
+          if (!result[majorLabel]) {
+            result[majorLabel] = {
+              majorLabel: majorLabel,
+              children: []
+            };
+          }  
+          result[majorLabel].children.push(item);
+        });
+        this.hotData = Object.values(result);
+      })
+    },
+    /**获取常规课程列表 */
+    getCourseList(){
+      this.$axios({
+        url:'/getCourseList',
+        params:{
+          tagId:this.listIndex
+        }
+      }).then((response)=>{
+        this.conventionData = response.data.data;
+        console.log("111",this.conventionData)
+      })
     }
+
+
   }
 }
 </script>
@@ -61,16 +99,15 @@ export default {
   width: 100%;
   height: calc(100vh - 60px);
   display: flex;
-  border: 1px solid red;
 }
 .mkdir{
   width: 15%;
   height: 100%;
-  border: 1px solid blue;
+  border-right: 1px solid #ccc;
+  overflow: auto;
 }
 .content{
   flex: 1;
-  border: 1px solid green;
 }
 
 .List{
