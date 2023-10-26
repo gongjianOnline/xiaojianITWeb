@@ -12,7 +12,7 @@
           <span class="hotTitleContent" @click="handelClick(item.url)">{{
             item.courseLabe
           }}</span>
-          <span class="hotDate">发布时间：{{$dayjs((item.date*1000)).format('YYYY-MM-DD')}}</span>
+          <span class="hotDate">发布时间：{{$dayjs((item.date)).format('YYYY-MM-DD')}}</span>
         </li>
       </ul>
     </div>

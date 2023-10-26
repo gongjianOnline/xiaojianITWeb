@@ -12,7 +12,7 @@
           <span class="hotTitleTage" v-show="childItem.finish==0">完结</span>
           <span class="hotTitleTageUpdate" v-show="childItem.finish==1">更新中...</span>
           <span class="hotTitleContent"  @click="handelClick(childItem)">{{ childItem.courseLabe }}</span>
-          <span class="hotDate">发布时间：{{ $dayjs((childItem.date*1000)).format('YYYY-MM-DD')  }}</span>
+          <span class="hotDate">发布时间：{{ $dayjs((childItem.date)).format('YYYY-MM-DD')  }}</span>
         </li>
       </ul>
     </div>
