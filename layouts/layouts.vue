@@ -1,0 +1,72 @@
+<!--  -->
+<template>
+  <div>
+    <header>
+    <div class="leftContainer">
+      <h1>小箭IT资源站</h1>
+      <div>
+        <div class="navComponent">
+          <NuxtLink to="/">首页</NuxtLink>
+          <NuxtLink to="/statement">免责声明</NuxtLink>
+        </div>
+      </div>
+    </div>
+    <div class="searchContainer">搜索框</div>
+    <div class="infoContainer">添加微信获取资料：xiaojianIT</div>
+  </header>
+
+  <Nuxt/>
+  
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+    };
+  },
+
+  components:{},
+
+  computed:{},
+
+  mounted(){},
+
+  methods:{}
+}
+
+</script>
+<style>
+header{
+  width: 100%;
+  height: 60px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+}
+h1{
+  font-size: 18px;
+}
+.navComponent{
+  margin-left: 20px;
+}
+a{
+  font-size: 18px;
+  color: #000;
+}
+
+.leftContainer{
+  display: flex;
+}
+.searchContainer{
+
+}
+.infoContainer{
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 40px;
+}
+</style>
