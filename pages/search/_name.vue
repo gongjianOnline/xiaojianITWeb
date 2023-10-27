@@ -30,7 +30,7 @@ export default {
   computed:{},
 
   mounted(){
-    console.log(this.$route.params.name)
+    // console.log(this.$route.params.name)
     this.getResultList(this.$route.params.name)
   },
 
@@ -43,8 +43,8 @@ export default {
           keywords:text
         }
       }).then((response)=>{
-        console.log("模糊查询")
-        console.log(response);
+        // console.log("模糊查询")
+        // console.log(response);
         this.resultList = response.data.data;
 
       })

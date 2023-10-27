@@ -104,7 +104,7 @@ export default {
           tagId:this.listIndex
         }
       }).then((response)=>{
-        this.conventionData = response.data.data;
+        this.conventionData = response.data.data?.reverse();
       })
     },
     /**获取专业列表 */
@@ -123,8 +123,7 @@ export default {
         url:"/getMajorCourseList",
         params:{majorId:majorId}
       }).then((response)=>{
-        console.log("1212",response.data.data)
-        this.conventionData = response.data.data;
+        this.conventionData = response.data.data?.reverse();
       })
     },
     /**开关 */

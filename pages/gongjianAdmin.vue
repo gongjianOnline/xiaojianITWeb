@@ -96,7 +96,7 @@ export default {
           "date":Date.now()
         }
       }).then((response)=>{
-        console.log(response)
+        // console.log(response)
         if(response.data.data.code === 101){
           this.$message({
             message: '添加成功',
