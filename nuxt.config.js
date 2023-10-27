@@ -1,3 +1,4 @@
+const routerPrefix = process.env.NODE_ENV === 'prod' ? '/it' : ''
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -12,7 +13,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: routerPrefix+'/favicon.ico' }
     ]
   },
 
@@ -77,5 +78,14 @@ export default {
   server:{
     host: '0.0.0.0', // 对外访问
     port: 3000
-  }
+  },
+  // 二级路由配置
+  router: {
+    base: routerPrefix // 应用的根 URL
+  },
+  
+  env: {
+    NODE_ENV: process.env.NODE_ENV
+  },
+
 }
