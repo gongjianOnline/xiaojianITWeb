@@ -43,7 +43,7 @@ export default {
 
   methods:{
     handleEnter(){
-      window.open(`/search/${this.searchResult}`,"_self")
+      window.open(`${process.env.NODE_ENV === "prod"?'/it':''}/search/${this.searchResult}`,"_self")
     }
   }
 }

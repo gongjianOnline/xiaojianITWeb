@@ -51,8 +51,8 @@ export default {
       form:{
         name:'',
         url:'',
-        tagId:null,
-        majorId:null,
+        tagId:3,
+        majorId:1,
         finish:0
       },
       tagList:[],
@@ -74,13 +74,13 @@ export default {
     getTagList(){
       this.$axios.get("/getTagList").then(response=>{
         this.tagList = response.data.data;
-        this.form.tagId = response.data.data[0]['tagId'];
+        // this.form.tagId = response.data.data[0]['tagId'];
       })
     },
     getMajorList(){
       this.$axios.get("/getMajorList").then(response=>{
         this.majorList = response.data.data;
-        this.form.majorId = response.data.data[0]['majorId'];
+        // this.form.majorId = response.data.data[0]['majorId'];
       })
     },
     onSubmit(){
@@ -102,7 +102,9 @@ export default {
             message: '添加成功',
             type: 'success'
           });
-          this.$refs.form.resetField();
+          setTimeout(()=>{
+            location.reload()
+          },1000)
         }else{
           this.$message({
             message: '添加失败,课程已存在',
