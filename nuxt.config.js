@@ -49,8 +49,9 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     proxy: true,
-    prefix: '/api',
-    credentials: true
+    // prefix: '/api',
+    prefix: 'http://114.115.218.92:3004',
+    credentials: false
   },
   proxy: {
     '/api': {
@@ -70,5 +71,11 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     vendor: ['axios']
+  },
+
+  // 部署前的配置
+  server:{
+    host: '0.0.0.0', // 对外访问
+    port: 3000
   }
 }
