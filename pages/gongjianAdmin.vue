@@ -51,8 +51,8 @@ export default {
       form:{
         name:'',
         url:'',
-        tagId:3,
-        majorId:1,
+        tagId:47,
+        majorId:4,
         finish:0
       },
       tagList:[],

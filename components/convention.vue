@@ -5,7 +5,9 @@
     <div class="hotContainer">
       <h2>课程目录</h2>
       <ul>
-        <li v-for="(item, index) in conventionData" :key="index">
+        <li 
+          v-for="(item, index) in conventionData.slice((currentPage - 1) * pagesize,currentPage * pagesize)" 
+          :key="index">
           <span class="hotTitleTage" v-show="item.finish == 0">完结</span>
           <span class="hotTitleTageUpdate" v-show="item.finish == 1">更新中...</span
           >
@@ -15,6 +17,21 @@
           <span class="hotDate">发布时间：{{$dayjs((item.date)).format('YYYY-MM-DD')}}</span>
         </li>
       </ul>
+
+      <div class="alignContainer">
+        <el-pagination
+            background
+            layout="total, sizes, prev, pager, next, jumper"
+            :page-sizes="[10, 15, 20, 30]"
+            :page-size="pagesize"
+            :current-page="currentPage"
+            @current-change="currentFy"
+            @size-change="handleSizeChange"
+            :total="conventionData.length"
+          >
+        </el-pagination>
+      </div>
+    
     </div>
   </div>
 </template>
@@ -49,6 +66,8 @@ export default {
           date: "2022-10-10",
         },
       ],
+      pagesize:10, // 每页显示的条数
+      currentPage:1 // 显示当前页数
     };
   },
 
@@ -68,6 +87,12 @@ export default {
   methods: {
     handelClick(url) {
       window.open(url);
+    },
+    currentFy(currentPage){
+      this.currentPage = currentPage;
+    },
+    handleSizeChange(size) {
+      this.pagesize = size;
     },
   },
 };
@@ -125,5 +150,8 @@ export default {
   display: block;
   font-size: 12px;
   color: #888888;
+}
+.alignContainer{
+  text-align: center;
 }
 </style>
