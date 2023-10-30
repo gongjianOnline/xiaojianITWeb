@@ -12,7 +12,10 @@
           <span class="hotTitleTage" v-show="childItem.finish==0">完结</span>
           <span class="hotTitleTageUpdate" v-show="childItem.finish==1">更新中...</span>
           <span class="hotTitleContent"  @click="handelClick(childItem)">{{ childItem.courseLabe }}</span>
-          <span class="hotDate">发布时间：{{ $dayjs((childItem.date)).format('YYYY-MM-DD')  }}</span>
+          <span class="hotDate">
+            <span class="hotDateLabel">发布时间：</span>
+            {{ $dayjs((childItem.date)).format('YYYY-MM-DD')  }}
+          </span>
         </li>
       </ul>
     </div>
@@ -67,6 +70,7 @@ export default {
   padding: 2px 10px;
   font-size: 12px;
   margin-right: 10px;
+  height: 20px;
 }
 .hotTitleTageUpdate{
   display: inline-block;
@@ -81,6 +85,7 @@ export default {
   cursor: pointer;
   transition: all 0.25ms;
   flex: 1;
+  font-size: 0.8rem;
 }
 .hotTitleContent:hover{
   color: green;
@@ -98,5 +103,28 @@ export default {
   display: block;
   font-size: 12px;
   color: #888888;
+}
+@media screen and (max-width:700px) {
+  .hotTitleContent{
+    font-size: 0.8rem;
+  }
+  .hotDateLabel{
+    display: none;
+  }
+  .hotDate{
+    display: none;
+  }
+}
+
+@media screen and (min-width:700px) {
+  .hotTitleContent{
+    font-size: 18px;
+  }
+  .hotDateLabel{
+    display: inline;
+  }
+  .hotDate{
+    display: block;
+  }
 }
 </style>

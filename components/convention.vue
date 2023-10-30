@@ -31,6 +31,19 @@
           >
         </el-pagination>
       </div>
+
+      <div class="alignContainerPhone">
+        <el-pagination
+            background
+            layout=" prev, next"
+            :page-size="pagesize"
+            :current-page="currentPage"
+            @current-change="currentFy"
+            @size-change="handleSizeChange"
+            :total="conventionData.length"
+          >
+        </el-pagination>
+      </div>
     
     </div>
   </div>
@@ -154,4 +167,41 @@ export default {
 .alignContainer{
   text-align: center;
 }
+
+@media screen and (max-width:700px) {
+  .hotTitleContent{
+    font-size: 0.8rem;
+  }
+  .hotDateLabel{
+    display: none;
+  }
+  .hotDate{
+    display: none;
+  }
+  .alignContainer{
+    display: none;
+  }
+  .alignContainerPhone{
+    display: block;
+  }
+}
+
+@media screen and (min-width:700px) {
+  .hotTitleContent{
+    font-size: 18px;
+  }
+  .hotDateLabel{
+    display: inline;
+  }
+  .hotDate{
+    display: block;
+  }
+  .alignContainer{
+    display: block;
+  }
+  .alignContainerPhone{
+    display: none;
+  }
+}
+
 </style>

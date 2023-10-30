@@ -3,8 +3,11 @@
   <div>
     <header>
     <div class="leftContainer">
-      <h1>小箭IT资源站</h1>
-      <div>
+      <h1>
+        小箭IT资源站
+        <div class="WeChatContainer">学习资源获取: xiaojianIT</div>
+      </h1>
+      <div class="navContainer">
         <div class="navComponent">
           <NuxtLink to="/" class="navComponentHome">首页</NuxtLink>
           <NuxtLink to="/statement">免责声明</NuxtLink>
@@ -23,7 +26,7 @@
   </header>
 
   <Nuxt/>
-  
+
   </div>
 </template>
 
@@ -91,4 +94,26 @@ a:hover{
   font-weight: bold;
   margin-right: 40px;
 }
+
+/**当屏幕小于600px时 */
+@media screen and (max-width:700px) {
+  .navContainer{
+    display:none
+  }
+  .searchContainer{
+    display:none
+  }
+  .infoContainer{
+    display:none
+  }
+}
+
+/**当屏幕大于600px时 */
+@media screen and (min-width:700px) {
+  .WeChatContainer{
+    display: none;
+  }
+}
+
+
 </style>

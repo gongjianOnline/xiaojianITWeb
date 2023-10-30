@@ -1,5 +1,50 @@
 <template>
   <div class="wrapper"> 
+    <div class="popupButton">
+      <el-button
+        @click="popupButtonClick"
+        type="primary" 
+        plain
+        size="mini"
+        icon="el-icon-s-unfold"></el-button>
+    </div>
+
+    <!-- 移动端抽屉 -->
+    <el-drawer
+      size="50%"
+      :with-header="false"
+      :visible.sync="drawer"
+      direction="ltr">
+      <div class="mkdir phoneMkdir">
+        <div class="switchContainer">
+          <el-switch
+            style="display: block"
+            v-model="switchValue"
+            active-color="#67C23A"
+            inactive-color="#13ce66"
+            active-text="大专业"
+            @change="handelChange"
+            inactive-text="小分类">
+          </el-switch>
+        </div>
+        <ul class="List" v-if="!switchValue">
+          <li :class="0==listIndex?'actived':''" 
+            @click="handelClick(0)">热门推荐</li>
+          <li :class="item.tagId==listIndex?'actived':''" 
+            @click="handelClick(item.tagId)"
+            v-for="(item) in listData" 
+            :key="item.tagId">{{item.tagLabel}}</li>
+        </ul>
+        <!-- 大专业菜单 -->
+        <ul class="List" v-if="switchValue">
+          <li :class="item.majorId==majorIndex?'actived':''" 
+            @click="getMajorCourseList(item.majorId)"
+            v-for="(item) in majorList" 
+            :key="item.majorId">{{item.majorLabel}}</li>
+        </ul>
+      </div>
+    </el-drawer>
+
     <div class="mkdir">
       <div class="switchContainer">
         <el-switch
@@ -48,7 +93,8 @@ export default {
       hotData:[],
       conventionData:[],
       switchValue:false,
-      majorList:[]
+      majorList:[],
+      drawer:false,
     }
   },
   components:{
@@ -133,7 +179,14 @@ export default {
       }else{
         this.getMajorList()
       }
+    },
+
+
+    /**移动端适配 */
+    popupButtonClick(){
+      this.drawer = true;
     }
+
 
 
 
@@ -159,7 +212,8 @@ export default {
   overflow: auto;
 }
 .content{
-  flex: 1;
+  width: 100%;
+  /* flex: 1; */
 }
 
 .List{
@@ -176,6 +230,35 @@ export default {
 .actived{
   color:green;
   font-weight: bolder;
+}
+
+/**当屏幕小于600px时 */
+@media screen and (max-width:700px) {
+  .mkdir{
+    display: none;
+  }
+  .popupButton{
+    margin-left: 10px;
+    margin-top:10px;
+    position: absolute;
+    right: 10px;
+    top: 6px;
+  }
+  .phoneMkdir{
+    display: block;
+    width: 200px;
+    border: none;
+  }
+}
+
+/**当屏幕大于600px时 */
+@media screen and (min-width:700px) {
+  .mkdir{
+    display: block;
+  }
+  .popupButton{
+    display: none;
+  }
 }
 
 </style>
